@@ -28,7 +28,7 @@ export class DataBaseService {
     }
   }
 
-  writeMessage(mes: string, time: number): Promise<void> {
+  writeMessage(mes, time: number) {
     return new Promise((resolve, reject) => {
       set(ref(this.db, 'messages/' + String(time)), {
         mes,
