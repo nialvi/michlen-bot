@@ -16,3 +16,11 @@ type AppConfig = {
     measurementId: string;
   };
 };
+
+type Title = string;
+type Comment = string;
+type Url = string;
+type Timestamp = number;
+type PlaceName = string;
+type PlaceID = string;
+type EventID = string;

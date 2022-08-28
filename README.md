@@ -1,5 +1,9 @@
 # Telegram nodejs boilerplate
 
+## Architecture
+
+![architecture-diagram](./diagram.draw.png)
+
 ## Dev mode
 
 ```bash
