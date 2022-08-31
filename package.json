@@ -22,10 +22,11 @@
     "rimraf": "~3.0",
     "ts-jest": "~28.0",
     "tsutils": "~3.21",
-    "typescript": "~4.7"
+    "typescript": "~4.7",
+    "vercel": "^28.2.0"
   },
   "scripts": {
-    "start": "node build/src/index.js",
+    "start": "vercel dev",
     "dev": "npm run dev-env start:dev",
     "start:dev": "concurrently -k 'npm run build:watch' 'npm run dev:watch'",
     "dev:watch": "nodemon --watch build --exec npm run dev-env start-inspect",
