@@ -1,4 +1,4 @@
-import http from 'http';
+// import http from 'http';
 import { Scenes, Telegraf } from 'telegraf';
 import { getConfig } from './config/index.js';
 import { DataBaseService } from './database.js';
@@ -69,18 +69,20 @@ getConfig()
   .then((config) => {
     const { bot, firebaseService } = main(config);
 
-    const requestListener = function (req, res): void {
-      route(bot, firebaseService);
-      res.setHeader('Content-Type', 'application/json');
-      res.writeHead(200);
-      res.end(`{"message": "${req.url}"}`);
-    };
+    route(bot, firebaseService);
 
-    const server = http.createServer(requestListener);
-    const port = 3000;
-    const host = 'localhost';
-    server.listen(port, host, () => {
-      console.log(`Server is running on http://${host}:${port}`);
-    });
+    // const requestListener = function (req, res): void {
+    //   route(bot, firebaseService);
+    //   res.setHeader('Content-Type', 'application/json');
+    //   res.writeHead(200);
+    //   res.end(`{"message": "${req.url}"}`);
+    // };
+
+    // const server = http.createServer(requestListener);
+    // const port = 3000;
+    // const host = 'localhost';
+    // server.listen(port, host, () => {
+    //   console.log(`Server is running on http://${host}:${port}`);
+    // });
   })
   .catch((error) => logger.error('Application not running', error));

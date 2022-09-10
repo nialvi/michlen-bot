@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
-  "public": true
+  "github": {
+    "silent": true
+  }
 }
