@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { Database, getDatabase, set, ref } from 'firebase/database';
+import { Database, getDatabase, set, ref, get, child } from 'firebase/database';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export class DataBaseService {
@@ -35,6 +35,18 @@ export class DataBaseService {
       })
         .then(resolve, reject)
         .catch(reject);
+    });
+  }
+
+  getList(id: string) {
+    return new Promise((resolve, reject) => {
+      get(child(ref(this.db), id)).then((snapshot) => {
+        if (snapshot.exists()) {
+          resolve(snapshot.val());
+        } else {
+          reject();
+        }
+      });
     });
   }
 }

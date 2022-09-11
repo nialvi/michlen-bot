@@ -1,7 +1,7 @@
 import { Place } from '../entity/index.js';
 
 export interface DatabaseService {
-  // getPlaceList(): Promise<Response<Place[]>>;
+  getPlaceList(): Promise<Response<string[]>>;
   // getPlaceById(id: PlaceID): Promise<Response<Place>>;
   writePlace(place: Place): Promise<Response<boolean>>;
 }

@@ -5,6 +5,7 @@ import { DataBaseService } from './database.js';
 import log4js from 'log4js';
 
 import { buttonList } from './app/place/ui/index.js';
+import { showPlaces } from './app/place/model/showPlaces.js';
 
 const logger = log4js.getLogger();
 logger.level = 'debug';
@@ -57,9 +58,14 @@ const route = (
     });
   });
 
-  bot.action(Buttons.DISHES_LIST, (ctx) => {
+  bot.action(Buttons.DISHES_LIST, async (ctx) => {
     logger.info('button dishes list is pressed');
-    ctx.reply('list of rest');
+
+    const list = await showPlaces(firebaseService);
+
+    logger.info('list result ', list);
+
+    ctx.reply(list.result.join('\n'));
   });
 
   buttonList(bot, logger, firebaseService, Buttons.ADD_PLACE);

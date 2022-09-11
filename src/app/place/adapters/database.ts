@@ -15,6 +15,18 @@ export function initPlaceDatabase(
         status: 'success',
       };
     },
+    async getPlaceList() {
+      const result = await firebaseService.getList('messages');
+
+      return {
+        result: Object.keys(result)
+          .map((key) => {
+            return result[key].mes?.name;
+          })
+          .filter((x) => x),
+        status: 'success',
+      };
+    },
     // getPlaceList(): Promise<Response<Place[]>>;
     // getPlaceById(id: PlaceID): Promise<Response<Place>>;
   };
