@@ -1,7 +1,7 @@
 import { Place } from '../entity/index.js';
 import { DatabaseService } from '../model/index.js';
 
-import { DataBaseService } from '../../../database.js';
+import { DataBaseService } from '../../database.js';
 
 export function initPlaceDatabase(
 	firebaseService: DataBaseService,

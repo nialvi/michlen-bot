@@ -1,1 +1,1 @@
-export * from './initConfig.js';
+export { Config, ConfigModel } from './model.js';
