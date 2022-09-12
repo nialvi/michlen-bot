@@ -2,7 +2,7 @@ import { injectable, inject, TYPES } from '../composition/index.js';
 
 import { Bot } from '../bot/model.js';
 import { Logger } from '../logger/index.js';
-import { Storage } from '../storage/index.js';
+// import { Storage } from '../storage/index.js';
 
 export interface Application {
 	start(): void;
@@ -18,7 +18,7 @@ enum Buttons {
 export class AppModel implements Application {
 	constructor(
 		@inject(TYPES.Logger) private logger: Logger,
-		@inject(TYPES.Storage) private storage: Storage,
+		// @inject(TYPES.Storage) private storage: Storage,
 		@inject(TYPES.Bot) private bot: Bot,
 	) {}
 
