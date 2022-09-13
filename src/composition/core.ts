@@ -10,4 +10,5 @@ export const TYPES = {
 	Storage: Symbol.for('Storage'),
 	Bot: Symbol.for('Bot'),
 	Logger: Symbol.for('Logger'),
+	Place: Symbol.for('Place'),
 };
