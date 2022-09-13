@@ -1,0 +1,55 @@
+import { PlaceEntity } from './place/model.js';
+
+export const places: PlaceEntity[] = [
+	{
+		id: `Selfie-${new Date().getTime()}`,
+		type: 'restaurant',
+		name: 'Selfie',
+		site: 'https://selfiemoscow.ru/reserve.html',
+		location: '',
+		comment: 'Хорошее место, еда хорошая, коктейли топ',
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+	},
+	{
+		id: `Bjorn-${new Date().getTime()}`,
+		type: 'restaurant',
+		name: 'Bjorn',
+		site: 'https://bjorn.rest/',
+		location: '',
+		comment:
+			'Скандинавское атмосферное место. Подробно рассказывали про блюда, интересная подача',
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+	},
+	{
+		id: `She-${new Date().getTime()}`,
+		type: 'restaurant',
+		name: 'she',
+		site: 'https://she.wrf.su/',
+		location: '',
+		comment: 'Не вкатило, второй раз бы не пошел',
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+	},
+	{
+		id: `Munterra-${new Date().getTime()}`,
+		type: 'hooka',
+		name: 'Munterra',
+		site: 'https://munterra.ru/',
+		location: '',
+		comment: '',
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+	},
+	{
+		id: `Натахтари-${new Date().getTime()}`,
+		type: 'restaurant',
+		name: 'Натахтари',
+		site: 'https://www.cafenatahtari.ru/',
+		location: '',
+		comment: '',
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+	},
+];

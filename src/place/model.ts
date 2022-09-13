@@ -28,6 +28,7 @@ export interface Place {
 	getPlaceList(): Promise<PlaceEntity[]>;
 	showPlaces(): Promise<string[]>;
 	createPlace(params: PlaceParams): PlaceEntity;
+	seed(palces: PlaceEntity[]): boolean;
 }
 
 @injectable()
@@ -69,11 +70,15 @@ export class PlaceModel implements Place {
 	async showPlaces() {
 		const placeList = await this.getPlaceList();
 
-		const result = Object.keys(placeList)
-			.map((key) => {
-				return placeList[key].name;
-			})
-			.filter((x) => x);
+		const result = Object.keys(placeList).map((key) => {
+			const mapEmojiToType = {
+				restaurant: '🍽',
+				hooka: '💨',
+				delivery: '📦',
+			};
+
+			return `${mapEmojiToType[placeList[key].type]} ${placeList[key].name}`;
+		});
 
 		this.logger.info('list of places: ', result);
 
@@ -97,5 +102,19 @@ export class PlaceModel implements Place {
 			createdAt: new Date().getTime(),
 			updatedAt: new Date().getTime(),
 		};
+	}
+
+	seed(places): boolean {
+		try {
+			places.forEach(async (place) => {
+				await this.storage.write('places', place);
+			});
+
+			return true;
+		} catch (error) {
+			this.logger.error('error in seed command: ', error);
+
+			return false;
+		}
 	}
 }

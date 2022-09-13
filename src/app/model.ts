@@ -4,14 +4,18 @@ import { Bot } from '../bot/model.js';
 import { Logger } from '../logger/index.js';
 import { Place } from '../place/index.js';
 
+import { places as mockPlaces } from '../seed.js';
+
 export interface Application {
 	start(): void;
 	stop(message: string): void;
 }
 
 enum Buttons {
-	DISHES_LIST = '📜 Список мест',
+	PLASE_LIST = '📜 Список мест',
+	WHERE_GO = '📍 Куда идем',
 	ADD_PLACE = '📍 Добавить место',
+	SEED = '/seedplaces',
 }
 
 @injectable()
@@ -35,7 +39,9 @@ export class AppModel implements Application {
 	}
 
 	initRouter(): void {
-		this.bot.text(async (ctx) => {
+		const telegramBot = this.bot.getInstance();
+
+		telegramBot.hears('/start', async (ctx) => {
 			this.logger.info('message is recieved', ctx.update.message.text);
 
 			ctx.reply('⭐️ ⭐️ ⭐️ Michlen', {
@@ -43,12 +49,12 @@ export class AppModel implements Application {
 					inline_keyboard: [
 						[
 							{
-								text: Buttons.DISHES_LIST,
-								callback_data: Buttons.DISHES_LIST,
+								text: Buttons.PLASE_LIST,
+								callback_data: Buttons.PLASE_LIST,
 							},
 							{
-								text: Buttons.ADD_PLACE,
-								callback_data: Buttons.ADD_PLACE,
+								text: Buttons.WHERE_GO,
+								callback_data: Buttons.WHERE_GO,
 							},
 						],
 					],
@@ -56,9 +62,7 @@ export class AppModel implements Application {
 			});
 		});
 
-		const telegramBot = this.bot.getInstance();
-
-		telegramBot.action(Buttons.DISHES_LIST, async (ctx) => {
+		telegramBot.action(Buttons.PLASE_LIST, async (ctx) => {
 			this.logger.info('button dishes list is pressed');
 
 			const places = await this.place.showPlaces();
@@ -78,6 +82,20 @@ export class AppModel implements Application {
 			ctx.reply(result ? '✍️ Готово' : '🤔 Не получилося');
 
 			// buttonList(bot, logger, firebaseService, Buttons.ADD_PLACE);
+		});
+
+		telegramBot.action(Buttons.WHERE_GO, (ctx) => {
+			this.logger.info('button where to go is pressed');
+
+			ctx.reply('🥩 Жажда крови');
+		});
+
+		telegramBot.hears(Buttons.SEED, async (ctx) => {
+			this.logger.info('button seed is pressed');
+
+			const result = await this.place.seed(mockPlaces);
+
+			ctx.reply('seed result: ' + result);
 		});
 	}
 }
