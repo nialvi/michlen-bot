@@ -10,6 +10,7 @@ import { Config } from '../config/index.js';
 export interface Storage {
 	write(entity: string, data: any): Promise<{ status: 'OK' | 'ERROR' }>;
 	getList<T>(id: string): Promise<T>;
+	getPlace<T>(id: string): Promise<T>;
 }
 
 @injectable()
@@ -60,6 +61,18 @@ export class FirebaseStorageModel implements Storage {
 	getList<T>(id: string) {
 		return new Promise<T>((resolve, reject) => {
 			get(child(ref(this.db), id)).then((snapshot) => {
+				if (snapshot.exists()) {
+					resolve(snapshot.val());
+				} else {
+					reject();
+				}
+			});
+		});
+	}
+
+	getPlace<T>(id: string) {
+		return new Promise<T>((resolve, reject) => {
+			get(child(ref(this.db), `places/${id}`)).then((snapshot) => {
 				if (snapshot.exists()) {
 					resolve(snapshot.val());
 				} else {

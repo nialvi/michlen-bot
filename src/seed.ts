@@ -2,7 +2,7 @@ import { PlaceEntity } from './place/model.js';
 
 export const places: PlaceEntity[] = [
 	{
-		id: `Selfie-${new Date().getTime()}`,
+		id: `selfie`,
 		type: 'restaurant',
 		name: 'Selfie',
 		site: 'https://selfiemoscow.ru/reserve.html',
@@ -12,7 +12,7 @@ export const places: PlaceEntity[] = [
 		updatedAt: new Date().getTime(),
 	},
 	{
-		id: `Bjorn-${new Date().getTime()}`,
+		id: `bjorn`,
 		type: 'restaurant',
 		name: 'Bjorn',
 		site: 'https://bjorn.rest/',
@@ -23,9 +23,9 @@ export const places: PlaceEntity[] = [
 		updatedAt: new Date().getTime(),
 	},
 	{
-		id: `She-${new Date().getTime()}`,
+		id: `she`,
 		type: 'restaurant',
-		name: 'she',
+		name: 'She',
 		site: 'https://she.wrf.su/',
 		location: '',
 		comment: 'Не вкатило, второй раз бы не пошел',
@@ -33,7 +33,7 @@ export const places: PlaceEntity[] = [
 		updatedAt: new Date().getTime(),
 	},
 	{
-		id: `Munterra-${new Date().getTime()}`,
+		id: `munterra`,
 		type: 'hooka',
 		name: 'Munterra',
 		site: 'https://munterra.ru/',
@@ -43,7 +43,7 @@ export const places: PlaceEntity[] = [
 		updatedAt: new Date().getTime(),
 	},
 	{
-		id: `Натахтари-${new Date().getTime()}`,
+		id: `натахтари`,
 		type: 'restaurant',
 		name: 'Натахтари',
 		site: 'https://www.cafenatahtari.ru/',

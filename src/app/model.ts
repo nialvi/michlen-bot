@@ -110,15 +110,40 @@ export class AppModel implements Application {
 				[
 					'<b>Справочная информация</b>',
 					'/start - запустит бота',
-					'/find - поиск места по названию',
+					'/find %название% - поиск места по названию через пробел',
 					'/help - справка',
 				].join('\n\n'),
 			);
 		});
 
-		telegramBot.command('find', (ctx) => {
-			this.logger.info('find command', ctx);
-			ctx.reply('find command');
+		telegramBot.command('find', async (ctx) => {
+			const mapEmojiToType = {
+				restaurant: '🍽',
+				hooka: '💨',
+				delivery: '📦',
+			};
+
+			const NOT_FOUND = 'Не нашел ничего по этому названию';
+
+			const [, id] = ctx.update.message.text.split(' ').filter((x) => x);
+
+			this.logger.info('find command id: ', id);
+
+			if (id) {
+				const place = await this.place.getPlace(id.toLocaleLowerCase());
+
+				if (place) {
+					ctx.replyWithHTML(
+						`<b>${mapEmojiToType[place.type]} ${place.name}</b> \n${
+							place.comment
+						} \n\n <a href="${place.site}">Посмотреть на сайте ➡️ </a>`,
+					);
+				} else {
+					ctx.reply(NOT_FOUND);
+				}
+			} else {
+				ctx.reply(NOT_FOUND);
+			}
 		});
 
 		telegramBot.on('inline_query', async (ctx) => {

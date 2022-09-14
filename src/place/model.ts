@@ -23,10 +23,13 @@ export type PlaceParams = {
 	comment?: Comment;
 };
 
+type PlaceDictionary = { [key: PlaceID]: PlaceEntity };
+
 export interface Place {
 	addPlace(): Promise<boolean>;
-	getPlaceList(): Promise<PlaceEntity[]>;
+	getPlaceList(): Promise<PlaceDictionary>;
 	showPlaces(): Promise<string[]>;
+	getPlace(id: string): Promise<PlaceEntity>;
 	createPlace(params: PlaceParams): PlaceEntity;
 	seed(palces: PlaceEntity[]): boolean;
 }
@@ -56,14 +59,14 @@ export class PlaceModel implements Place {
 
 	async getPlaceList() {
 		try {
-			const result = await this.storage.getList<PlaceEntity[]>('places');
+			const result = await this.storage.getList<PlaceDictionary>('places');
 
-			this.logger.info('get places list: ', result);
+			this.logger.info('get places list: ', Object.keys(result).length);
 
 			return result;
 		} catch (error) {
 			this.logger.error('get places list error: ', error);
-			return [];
+			return {};
 		}
 	}
 
@@ -80,7 +83,7 @@ export class PlaceModel implements Place {
 			return `${mapEmojiToType[placeList[key].type]} ${placeList[key].name}`;
 		});
 
-		this.logger.info('list of places: ', result.length);
+		this.logger.info('list of places: ', result);
 
 		return result;
 	}
@@ -102,6 +105,20 @@ export class PlaceModel implements Place {
 			createdAt: new Date().getTime(),
 			updatedAt: new Date().getTime(),
 		};
+	}
+
+	async getPlace(id: string) {
+		try {
+			const result = await this.storage.getPlace<PlaceEntity>(id);
+
+			this.logger.info('show place list: ', result);
+
+			return result;
+		} catch (error) {
+			this.logger.error('show place error: ', error);
+
+			return null;
+		}
 	}
 
 	seed(places): boolean {
