@@ -80,7 +80,7 @@ export class PlaceModel implements Place {
 			return `${mapEmojiToType[placeList[key].type]} ${placeList[key].name}`;
 		});
 
-		this.logger.info('list of places: ', result);
+		this.logger.info('list of places: ', result.length);
 
 		return result;
 	}

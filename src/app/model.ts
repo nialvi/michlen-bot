@@ -29,7 +29,7 @@ export class AppModel implements Application {
 	start() {
 		this.logger.info('BOT IS STARTED 🚀');
 
-		this.bot.start();
+		this.bot.launch();
 
 		this.initRouter();
 	}
@@ -41,25 +41,32 @@ export class AppModel implements Application {
 	initRouter(): void {
 		const telegramBot = this.bot.getInstance();
 
-		telegramBot.hears('/start', async (ctx) => {
+		telegramBot.command('start', async (ctx) => {
 			this.logger.info('message is recieved', ctx.update.message.text);
 
-			ctx.reply('⭐️ ⭐️ ⭐️ Michlen', {
-				reply_markup: {
-					inline_keyboard: [
-						[
-							{
-								text: Buttons.PLASE_LIST,
-								callback_data: Buttons.PLASE_LIST,
-							},
-							{
-								text: Buttons.WHERE_GO,
-								callback_data: Buttons.WHERE_GO,
-							},
+			ctx.reply(
+				[
+					'⭐️ ⭐️ ⭐️ Michlen',
+					'Тут ты можешь посмотреть список избранных мест куда можно сходить',
+					'/help - покажет список команд',
+				].join('\n\n'),
+				{
+					reply_markup: {
+						inline_keyboard: [
+							[
+								{
+									text: Buttons.PLASE_LIST,
+									callback_data: Buttons.PLASE_LIST,
+								},
+								{
+									text: Buttons.WHERE_GO,
+									callback_data: Buttons.WHERE_GO,
+								},
+							],
 						],
-					],
+					},
 				},
-			});
+			);
 		});
 
 		telegramBot.action(Buttons.PLASE_LIST, async (ctx) => {
@@ -96,6 +103,40 @@ export class AppModel implements Application {
 			const result = await this.place.seed(mockPlaces);
 
 			ctx.reply('seed result: ' + result);
+		});
+
+		telegramBot.help((ctx) => {
+			ctx.replyWithHTML(
+				[
+					'<b>Справочная информация</b>',
+					'/start - запустит бота',
+					'/find - поиск места по названию',
+					'/help - справка',
+				].join('\n\n'),
+			);
+		});
+
+		telegramBot.command('find', (ctx) => {
+			this.logger.info('find command', ctx);
+			ctx.reply('find command');
+		});
+
+		telegramBot.on('inline_query', async (ctx) => {
+			this.logger.info('inline query', ctx.inlineQuery);
+
+			const places = await this.place.showPlaces();
+
+			await ctx.telegram.answerInlineQuery(
+				ctx.inlineQuery.id,
+				places.map((place) => ({
+					type: 'article',
+					title: place,
+					id: place,
+					input_message_content: {
+						message_text: `${place} \n\n тут будет описание`,
+					},
+				})),
+			);
 		});
 	}
 }

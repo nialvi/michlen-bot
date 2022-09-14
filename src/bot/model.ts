@@ -5,7 +5,7 @@ import { Config } from '../config/index.js';
 type TelegramInstance = Telegraf<Scenes.SceneContext<Scenes.SceneSessionData>>;
 
 export interface Bot {
-	start(): void;
+	launch(): void;
 	stop(message: string): void;
 	// TODO add type for ctx
 	text(cb: (ctx: any) => void): void;
@@ -22,7 +22,7 @@ export class TelegramBotModel implements Bot {
 		);
 	}
 
-	start() {
+	launch() {
 		this.bot.launch();
 	}
 
