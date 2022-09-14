@@ -41,7 +41,8 @@
 		"prettier": "prettier --config .prettierrc --write .",
 		"test:watch": "jest --watch",
 		"gen-env": "gen-env-types .env -o src/env.d.ts -e .",
-		"dev-env": "env-cmd -f ./.env npm run"
+		"dev-env": "env-cmd -f ./.env npm run",
+		"prod-env": "env-cmd -f ./.env.prod npm run"
 	},
 	"author": "Viktor Nikoalev <maclauddd@gmail.com>",
 	"license": "Apache-2.0",
